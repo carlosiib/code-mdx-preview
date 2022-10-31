@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import * as esbuild from 'esbuild-wasm'
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 function App() {
   const [input, setInput] = useState('')
@@ -20,13 +21,15 @@ function App() {
   async function onClick() {
     if (!ref.current) return
 
-    // Transpile value from text area
-    const result = await ref.current.transform(input, {
-      loader: 'jsx',
-      target: 'es2015'
+
+    const result = await ref.current.build({
+      entryPoints: ['index.js'],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin()]
     })
 
-    setCode(result.code)
+    setCode(result.outputFiles[0].text)
   }
 
   return (
