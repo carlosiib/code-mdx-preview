@@ -42,7 +42,7 @@ export const unpkgPathPlugin = () => {
           return {
             loader: "jsx",
             contents: `
-              const message = require('nested-test-pkg');
+              const react = require('react');
               console.log(message);
             `,
           };
@@ -50,7 +50,6 @@ export const unpkgPathPlugin = () => {
         const { data, request } = await axios.get(
           args.path
         );
-        console.log(request);
         return {
           loader: "jsx",
           contents: data,
