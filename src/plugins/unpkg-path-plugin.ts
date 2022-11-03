@@ -35,6 +35,7 @@ export const unpkgPathPlugin = () => {
       );
 
       // onLoad: Fetch content of module
+      // Handle Version: import React from 'react@16.0.0'
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         console.log("onLoad", args);
 
