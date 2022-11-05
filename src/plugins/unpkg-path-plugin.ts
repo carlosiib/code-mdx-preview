@@ -7,7 +7,7 @@ const fileCache = localforage.createInstance({
   name: "filecache",
 });
 
-export const unpkgPathPlugin = () => {
+export const unpkgPathPlugin = (inputCode: string) => {
   // onResolve: Tries to find the path of a given module
   return {
     name: "unpkg-path-plugin",
@@ -48,10 +48,7 @@ export const unpkgPathPlugin = () => {
         if (args.path === "index.js") {
           return {
             loader: "jsx",
-            contents: `
-              const react = require('react');
-              console.log(message);
-            `,
+            contents: inputCode,
           };
         }
 
