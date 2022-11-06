@@ -38,12 +38,17 @@ export const fetchPlugin = (inputCode: string) => {
           ? "css"
           : "jsx";
 
+        const escaped = data
+          .replace(/\n/g, "")
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
+
         const contents =
           fileType === "css"
             ? `
-          const style = document.createElement('style')
-          style.innerText =  'body {background-color: "red"}'
-          document.appendChild(style)
+            const style = document.createElement('style');
+            style.innerText = '${escaped}';
+            document.head.appendChild(style);
           `
             : data;
 
