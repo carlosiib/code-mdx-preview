@@ -14,14 +14,13 @@ function App() {
         worker: true,
         wasmURL: "/esbuild.wasm"
       })
-
     }
+
     startService()
   }, [])
 
   async function onClick() {
     if (!ref.current) return
-
 
     const result = await ref.current.build({
       entryPoints: ['index.js'],

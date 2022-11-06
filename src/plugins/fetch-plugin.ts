@@ -10,8 +10,6 @@ export const fetchPlugin = (inputCode: string) => {
   return {
     name: "fetch-plugin",
     setup(build: esbuild.PluginBuild) {
-      // onLoad: Fetch content of module
-      // Handle Version: import React from 'react@16.0.0'
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         console.log("onLoad", args);
 
@@ -23,22 +21,35 @@ export const fetchPlugin = (inputCode: string) => {
         }
 
         // Cached layer
-        const cachedResult =
-          await fileCache.getItem<esbuild.OnLoadResult>(
-            args.path
-          );
+        // const cachedResult =
+        //   await fileCache.getItem<esbuild.OnLoadResult>(
+        //     args.path
+        //   );
 
-        if (cachedResult) {
-          return cachedResult;
-        }
+        // if (cachedResult) {
+        //   return cachedResult;
+        // }
 
         const { data, request } = await axios.get(
           args.path
         );
 
+        const fileType = args.path.match(/.css$/)
+          ? "css"
+          : "jsx";
+
+        const contents =
+          fileType === "css"
+            ? `
+          const style = document.createElement('style')
+          style.innerText =  'body {background-color: "red"}'
+          document.appendChild(style)
+          `
+            : data;
+
         const result: esbuild.OnLoadResult = {
           loader: "jsx",
-          contents: data,
+          contents,
           resolveDir: new URL("./", request.responseURL)
             .pathname,
         };
