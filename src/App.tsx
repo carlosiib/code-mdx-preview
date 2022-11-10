@@ -34,6 +34,12 @@ function App() {
     })
 
     setCode(result.outputFiles[0].text)
+
+    try {
+      eval(result.outputFiles[0].text)
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (
@@ -43,6 +49,9 @@ function App() {
         <button onClick={onClick}>Submit</button>
       </div>
       <pre>{code}</pre>
+
+      <iframe sandbox="allow-same-origin" src="" />
+
     </div>
   );
 }
