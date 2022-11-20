@@ -40,9 +40,9 @@ function App() {
 
   /**
    * Code flow
-   * 1. Bundled code
-   *   1.1 Emit message from textarea into iframe
-   * 2. Transpiled
+   * 1. Transpiled
+   * 2. Bundled code
+   *  2.1 Emit message from textarea into iframe
    * 3. Executed in iframe
    */
   const html = `
