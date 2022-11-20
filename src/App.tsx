@@ -7,6 +7,7 @@ function App() {
   const [input, setInput] = useState('')
   const [code, setCode] = useState('')
   const ref = useRef<any>()
+  const iframe = useRef<any>()
 
   useEffect(() => {
     const startService = async () => {
@@ -22,6 +23,7 @@ function App() {
   async function onClick() {
     if (!ref.current) return
 
+    // Bundling process
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -33,12 +35,28 @@ function App() {
       },
     })
 
-    setCode(result.outputFiles[0].text)
-
+    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*')
   }
 
-  // Bundled code
-  const html = `<script>${code}</script>`
+  /**
+   * Code flow
+   * 1. Bundled code
+   *   1.1 Emit message from textarea into iframe
+   * 2. Transpiled
+   * 3. Executed in iframe
+   */
+  const html = `
+  <html>
+  <head></head>
+    <body>
+      <div id="root"></div>
+      <script>
+        window.addEventListener('message', (event)=>{
+          eval(event.data)
+        }, false)
+      </script>
+    </body>
+  </html>`
 
   return (
     <div >
@@ -48,7 +66,7 @@ function App() {
       </div>
       <pre>{code}</pre>
 
-      <iframe sandbox="allow-scripts" srcDoc={html} title="code" />
+      <iframe ref={iframe} sandbox="allow-scripts" srcDoc={html} title="code" />
 
     </div>
   );
