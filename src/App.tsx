@@ -35,12 +35,10 @@ function App() {
 
     setCode(result.outputFiles[0].text)
 
-    try {
-      eval(result.outputFiles[0].text)
-    } catch (error) {
-      alert(error)
-    }
   }
+
+  // Bundled code
+  const html = `<script>${code}</script>`
 
   return (
     <div >
@@ -50,10 +48,12 @@ function App() {
       </div>
       <pre>{code}</pre>
 
-      <iframe sandbox="allow-same-origin" src="" />
+      <iframe sandbox="allow-scripts" srcDoc={html} title="code" />
 
     </div>
   );
 }
+
+
 
 export default App;
