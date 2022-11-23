@@ -23,6 +23,8 @@ function App() {
   async function onClick() {
     if (!ref.current) return
 
+    iframe.current.srcdoc = html;
+
     // Bundling process
     const result = await ref.current.build({
       entryPoints: ['index.js'],
