@@ -6,6 +6,13 @@ export const CodeEditor = () => {
     theme="dark"
     height="400px"
     options={{
-      wordWrap: 'on'
+      wordWrap: 'on',
+      minimap: { enabled: true },
+      showUnused: false,
+      folding: false,
+      lineNumbersMinChars: 3,
+      fontSize: 16,
+      scrollBeyondLastLine: false,
+      automaticLayout: true,
     }} />
 }
