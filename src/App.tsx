@@ -68,7 +68,9 @@ function App() {
 
   return (
     <div >
-      <CodeEditor />
+      <CodeEditor
+        initialValue="const a = 1"
+        onChange={(value) => setInput(value)} />
 
       <div>
         <button onClick={onClick}>Submit</button>
