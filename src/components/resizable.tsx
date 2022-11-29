@@ -1,14 +1,11 @@
-import { ResizableBox } from "react-resizable";
+import { ResizableBox } from 'react-resizable';
 
 interface ResizableProps {
-  direction: "horizontal" | "vertical";
-  children?: React.ReactNode;
+  direction: 'horizontal' | 'vertical';
 }
 
-export const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
-  return (
-    <div>
-      {children}
-    </div>
-  )
-}
+const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
+  return <ResizableBox width={300} height={300}>{children}</ResizableBox>;
+};
+
+export default Resizable;

@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import ReactDOM from 'react-dom';
+import CodeCell from './components/code-cell';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const App = () => {
+  return (
+    <div>
+      <CodeCell />
+      <CodeCell />
+    </div>
+  );
+};
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
+ReactDOM.render(<App />, document.querySelector('#root'));
