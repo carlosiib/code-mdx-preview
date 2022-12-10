@@ -6,6 +6,7 @@ import {
   DeleteCellAction,
   MoveCellAction,
   InsertCellBeforeAction,
+  Direction,
 } from "../actions";
 
 export const updateCell = (
@@ -30,7 +31,7 @@ export const deleteCell = (
 };
 export const moveCell = (
   id: string,
-  direction: "up" | "down"
+  direction: Direction
 ): MoveCellAction => {
   return {
     type: ActionType.MOVE_CELL,
