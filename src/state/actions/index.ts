@@ -13,7 +13,7 @@ export interface MoveCellAction {
 }
 
 export interface DeleteCellAction {
-  type: ActionType.DELETE_CEL;
+  type: ActionType.DELETE_CELL;
   payload: string;
 }
 

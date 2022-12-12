@@ -25,7 +25,7 @@ export const deleteCell = (
   id: string
 ): DeleteCellAction => {
   return {
-    type: ActionType.DELETE_CEL,
+    type: ActionType.DELETE_CELL,
     payload: id,
   };
 };
