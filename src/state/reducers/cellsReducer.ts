@@ -1,3 +1,4 @@
+import { code } from "@uiw/react-md-editor/lib/cjs/commands";
 import { stat } from "fs";
 import produce from "immer";
 import { ActionType } from "../action-types";
@@ -54,11 +55,34 @@ const reducer = produce(
         state.order[targetIndex] = action.payload.id;
         return;
       case ActionType.INSERT_CELL_BEFORE:
+        const cell: Cell = {
+          id: randomId(),
+          type: action.payload.type,
+          content: "",
+        };
+        state.data[cell.id] = cell;
+
+        const foundIndex = state.order.findIndex(
+          (id) => id === action.payload.id
+        );
+
+        if (foundIndex < 0) {
+          // id es null - cell inserted at the end of array order
+          state.order.push(cell.id);
+        } else {
+          // id es string - cell inserted before an element in array order
+          state.order.splice(foundIndex, 0, cell.id);
+        }
+
         return state;
       default:
         return state;
     }
   }
 );
+
+const randomId = () => {
+  return Math.random().toString(36).substring(2, 5);
+};
 
 export default reducer;
