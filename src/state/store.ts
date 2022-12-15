@@ -9,7 +9,7 @@ export const store = createStore(
   applyMiddleware(thunk)
 );
 
-/* Manual action testing 
+/* Manual action testing */
 store.dispatch({
   type: ActionType.INSERT_CELL_BEFORE,
   payload: {
@@ -27,4 +27,3 @@ store.dispatch({
 });
 
 console.log(store.getState());
-*/
