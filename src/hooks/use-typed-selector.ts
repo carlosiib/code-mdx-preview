@@ -4,5 +4,7 @@ import {
 } from "react-redux";
 import { RootState } from "../state";
 
-// Types for store
+/* Types for store
+ * Getting store values
+ */
 export const useTypeSelector: TypedUseSelectorHook<RootState> = useSelector;

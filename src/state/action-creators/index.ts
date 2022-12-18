@@ -9,6 +9,7 @@ import {
   Direction,
 } from "../actions";
 
+// Used in useActions custom hook
 export const updateCell = (
   id: string,
   content: string
@@ -42,7 +43,7 @@ export const moveCell = (
   };
 };
 export const insertCellBefore = (
-  id: string,
+  id: string | null,
   cellType: CellTypes
 ): InsertCellBeforeAction => {
   return {

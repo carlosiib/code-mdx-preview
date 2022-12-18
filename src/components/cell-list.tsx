@@ -1,5 +1,6 @@
 import { useTypeSelector } from "../hooks/use-typed-selector"
 import CellListItem from "./cell-list-item"
+import AddCell from "./add-cell"
 
 const CellList: React.FC = () => {
   // Getting store values
@@ -8,8 +9,17 @@ const CellList: React.FC = () => {
       return data[id]
     })
   })
-  const renderCELLS = cells.map(cell => <CellListItem key={cell.id} cell={cell} />)
-  return <div>{renderCELLS}</div>
+
+  const renderCELLS = cells.map(cell =>
+    <>
+      <AddCell nextCellId={cell.id} />
+      <CellListItem cell={cell} />
+    </>
+  )
+  return <div>
+    {renderCELLS}
+    <AddCell nextCellId={null} />
+  </div>
 }
 
 export default CellList
