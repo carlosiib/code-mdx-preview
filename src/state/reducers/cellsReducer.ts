@@ -52,7 +52,7 @@ const reducer = produce(
         state.order[index] = state.order[targetIndex];
         state.order[targetIndex] = action.payload.id;
         return state;
-      case ActionType.INSERT_CELL_BEFORE:
+      case ActionType.INSERT_CELL_AFTER:
         const cell: Cell = {
           id: randomId(),
           type: action.payload.type,
@@ -65,11 +65,11 @@ const reducer = produce(
         );
 
         if (foundIndex < 0) {
-          // id es null - cell inserted at the end of array order
-          state.order.push(cell.id);
+          // id es null - cell inserted at the begging of array order
+          state.order.unshift(cell.id);
         } else {
-          // id es string - cell inserted before an element in array order
-          state.order.splice(foundIndex, 0, cell.id);
+          // id es string - cell inserted after an element in array order
+          state.order.splice(foundIndex + 1, 0, cell.id);
         }
 
         return state;
