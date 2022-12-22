@@ -14,15 +14,21 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const bundle = useTypeSelector((state) => state.bundles[cell.id])
 
   useEffect(() => {
+    // prevent "flashing" UI for preview bundle
+    if (!bundle) {
+      createBundle(cell.id, cell.content)
+      return
+    }
+
     const timer = setTimeout(async () => {
       // bundle process from action creator
       createBundle(cell.id, cell.content)
-
     }, 750)
 
     return () => {
       clearTimeout(timer)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cell.id, cell.content, createBundle])
 
 
