@@ -17,12 +17,13 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const timer = setTimeout(async () => {
       // bundle process from action creator
       createBundle(cell.id, cell.content)
+
     }, 750)
 
     return () => {
       clearTimeout(timer)
     }
-  }, [cell.id, cell.content])
+  }, [cell.id, cell.content, createBundle])
 
 
   return (
