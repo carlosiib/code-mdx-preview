@@ -14,23 +14,39 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBundle } = useActions()
   const bundle = useTypeSelector((state) => state.bundles[cell.id])
 
+  const cumulativeCode = useTypeSelector((state) => {
+    const { data, order } = state.cells
+    const orderedCells = order.map((id) => data[id])
+
+    const cumulativeCode = []
+    for (let c of orderedCells) {
+      if (c.type === 'code') {
+        cumulativeCode.push(c.content)
+      }
+      if (c.id === cell.id) {
+        break
+      }
+    }
+    return cumulativeCode
+  })
+
   useEffect(() => {
     // prevent "flashing" UI for preview bundle
     if (!bundle) {
-      createBundle(cell.id, cell.content)
+      createBundle(cell.id, cumulativeCode.join('\n'))
       return
     }
 
     const timer = setTimeout(async () => {
       // bundle process from action creator
-      createBundle(cell.id, cell.content)
+      createBundle(cell.id, cumulativeCode.join('\n'))
     }, 750)
 
     return () => {
       clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.id, cell.content, createBundle])
+  }, [cumulativeCode.join('\n'), cell.id, createBundle])
 
 
   return (
