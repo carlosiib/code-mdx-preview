@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
-import { CellTypes } from "../cell";
+import { Cell, CellTypes } from "../cell";
 import {
   Action,
   UpdateCellAction,
@@ -10,6 +10,7 @@ import {
   Direction,
 } from "../actions";
 import bundle from "../../bundler";
+import axios from "axios";
 
 // Used in useActions custom hook
 export const updateCell = (
@@ -80,5 +81,27 @@ export const createBundle = (
         },
       },
     });
+  };
+};
+
+export const fetchCells = () => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: ActionType.FETCH_CELLS });
+    try {
+      const { data }: { data: Cell[] } = await axios.get(
+        "/cells"
+      );
+      dispatch({
+        type: ActionType.FETCH_CELLS_COMPLETE,
+        payload: data,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch({
+          type: ActionType.FETCH_CELLS_ERROR,
+          payload: error.message,
+        });
+      }
+    }
   };
 };
