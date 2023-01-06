@@ -11,6 +11,7 @@ import {
 } from "../actions";
 import bundle from "../../bundler";
 import axios from "axios";
+import { RootState } from "../reducers";
 
 // Used in useActions custom hook
 export const updateCell = (
@@ -99,6 +100,28 @@ export const fetchCells = () => {
       if (error instanceof Error) {
         dispatch({
           type: ActionType.FETCH_CELLS_ERROR,
+          payload: error.message,
+        });
+      }
+    }
+  };
+};
+
+export const saveCells = () => {
+  return async (
+    dispatch: Dispatch<Action>,
+    getState: () => RootState
+  ) => {
+    const {
+      cells: { data, order },
+    } = getState();
+    const cells = order.map((id) => data[id]);
+    try {
+      await axios.post("/cells", { cells });
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch({
+          type: ActionType.SAVE_CELLS_ERROR,
           payload: error.message,
         });
       }
