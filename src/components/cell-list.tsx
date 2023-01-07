@@ -1,8 +1,10 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useTypeSelector } from "../hooks/use-typed-selector"
 import CellListItem from "./cell-list-item"
 import AddCell from "./add-cell"
 import './cell-list.css'
+import { useActions } from '../hooks/useActions'
+
 
 const CellList: React.FC = () => {
   // Getting store values
@@ -11,6 +13,11 @@ const CellList: React.FC = () => {
       return data[id]
     })
   })
+  const { fetchCells } = useActions()
+
+  useEffect(() => {
+    fetchCells()
+  }, [])
 
   const renderCELLS = cells.map(cell =>
     <Fragment key={cell.id}>
